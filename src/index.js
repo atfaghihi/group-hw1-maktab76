@@ -6,22 +6,28 @@ const limit = 10;
 let currentPage = 1;
 
 
-const Tbody = document.getElementById('tbody');
-const ulPagination =document.querySelector('#pagination');
-
+const usersTable = document.getElementById('tbody');
+const ulPagination =document.querySelector('#paginationUsers');
+const pageLoading =document.querySelector('#loading');
+const editIcon = document.querySelectorAll('#edit');
+const deleteIcon = document.querySelectorAll('#delete');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getInfo(currentPage);
+    getUser(currentPage);
 });
 
-function getInfo(page) {
-    fetch(`${API_URL}/cw14/?page=${page}&limit=${limit}`)
+function getUser() {
+    usersTable.innerHTML = "";
+    pageLoading.style.display ="block";
+    fetch(`${API_URL}/cw14/?page=${currentPage}&limit=${limit}`)
     .then((response) => response.json())
-    .then((data) => {data.forEach(createTable)
-      
-        const {length} = data ;
-        createPagination();
+    
+    .then((data) => {
+        const {count , items} = data ;
+        items.forEach(createTable)
+        createPagination(count);
+        pageLoading.style.display ="none";
     });
 
 }
@@ -80,15 +86,17 @@ function createTable(data) {
     <td>
     ${data.unit}
     </td>
+    <td id="edit" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
+    </td>
+    <td id="delete" onclick="confirmDeleteData(${data.id})"><img src="https://img.icons8.com/cute-clipart/64/228BE6/filled-trash.png" width=40 height =40/></td>
     </tr>`
-    Tbody.innerHTML += initHtml;
+    usersTable.innerHTML += initHtml;
 }
 
 //page//
-function createPagination(count=30){
+function createPagination(count){
     
  const pageCount = Math.ceil(count/limit);
- console.log(count);
 let lis ='';
 for(let i=1; i<=pageCount ;i++ ){
     lis += `<li class= 'page-item ${i=== currentPage ? 'active' :'' }'> 
@@ -99,3 +107,26 @@ for(let i=1; i<=pageCount ;i++ ){
 ulPagination.innerHTML =lis;
 
 }
+
+
+//addEventListener
+ulPagination.addEventListener("click",(event)=>{
+    const listItem = document.querySelectorAll(".page-item");
+    listItem.forEach((items)=>{
+        items.classList.remove("active");
+    });
+    event.target.parentElement.classList.add("active");
+    currentPage = Number(event.target.innerText);
+    getUser();
+} 
+);
+
+//delete 
+// deleteIcon.forEach((item)=>{
+    // item.addEventListener("click",(event)=>{
+        // //console.log(event.target.innerText);
+    // });
+// })
+// function confirmDeleteData(id){
+    // fetch
+// }
