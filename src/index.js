@@ -3,22 +3,27 @@
 const API_URL = 'https://62b3028e20cad3685c9927bf.mockapi.io/api';
 
 const limit = 10;
-let page = 1;
+let currentPage = 1;
 
 
 const Tbody = document.getElementById('tbody');
-
+const ulPagination =document.querySelector('#pagination');
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getInfo(1);
+    getInfo(currentPage);
 });
 
 function getInfo(page) {
     fetch(`${API_URL}/cw14/?page=${page}&limit=${limit}`)
     .then((response) => response.json())
-    .then((data) => data.forEach(createTable));
+    .then((data) => {data.forEach(createTable)
+      
+        const {length} = data ;
+        createPagination();
+    });
+
 }
 
 
@@ -34,7 +39,7 @@ function createTable(data) {
     ${data.family}
     </td>
     <td>
-    ${data.birthday}
+    ${ new Date(data.birthday ).toDateString()}
     </td>
     <td>
     ${data.nationalId}
@@ -49,7 +54,7 @@ function createTable(data) {
     ${data.education}
     </td>
     <td>
-    ${data.maritalStatus}
+    ${data.maritalStatus ? "married" :'single'} 
     </td>
     <td>
     ${data.country}
@@ -77,4 +82,20 @@ function createTable(data) {
     </td>
     </tr>`
     Tbody.innerHTML += initHtml;
+}
+
+//page//
+function createPagination(count=30){
+    
+ const pageCount = Math.ceil(count/limit);
+ console.log(count);
+let lis ='';
+for(let i=1; i<=pageCount ;i++ ){
+    lis += `<li class= 'page-item ${i=== currentPage ? 'active' :'' }'> 
+    <a  href="#" class="page-link" >${i}</a> </li>` ;
+    
+}
+
+ulPagination.innerHTML =lis;
+
 }
