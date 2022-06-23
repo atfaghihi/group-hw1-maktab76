@@ -1,40 +1,57 @@
 /// VARIABLE PUBLIC
 
-const API_URL = 'https://62b3028e20cad3685c9927bf.mockapi.io/api';
+const API_URL = "https://62b3028e20cad3685c9927bf.mockapi.io/api";
 
 const limit = 10;
 let currentPage = 1;
 
+const usersTable = document.getElementById("tbody");
+const ulPagination = document.querySelector("#paginationUsers");
+const pageLoading = document.querySelector("#loading");
+const editIcon = document.querySelectorAll("#edit");
+const deleteIcon = document.querySelectorAll("#delete");
+// modal variables
 
-const usersTable = document.getElementById('tbody');
-const ulPagination =document.querySelector('#paginationUsers');
-const pageLoading =document.querySelector('#loading');
-const editIcon = document.querySelectorAll('#edit');
-const deleteIcon = document.querySelectorAll('#delete');
+const name = document.getElementById("name");
+const family = document.getElementById("family");
+const birthday = document.getElementById("birthday");
+const nationalId = document.getElementById("nationalId");
+const fathersName = document.getElementById("fathersName");
+const job = document.getElementById("job");
+const education = document.getElementById("education");
+const maritalStatus = document.getElementById("maritalStatus");
+const country = document.getElementById("country");
+const state = document.getElementById("state");
+const city = document.getElementById("city");
+const street = document.getElementById("street");
+const block = document.getElementById("block");
+const no = document.getElementById("no");
+const floor = document.getElementById("floor");
+const unit = document.getElementById("unit");
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    getUser(currentPage);
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  getUser(currentPage);
 });
 
 function getUser() {
-    usersTable.innerHTML = "";
-    pageLoading.style.display ="block";
-    fetch(`${API_URL}/cw14/?page=${currentPage}&limit=${limit}`)
+  usersTable.innerHTML = "";
+  pageLoading.style.display = "block";
+  fetch(`${API_URL}/cw14/?page=${currentPage}&limit=${limit}`)
     .then((response) => response.json())
-    
-    .then((data) => {
-        const {count , items} = data ;
-        items.forEach(createTable)
-        createPagination(count);
-        pageLoading.style.display ="none";
-    });
 
+    .then((data) => {
+      const { count, items } = data;
+      items.forEach(createTable);
+      createPagination(count);
+      pageLoading.style.display = "none";
+    });
 }
 
-
 function createTable(data) {
-    let initHtml = `<tr data-id="${data.id}">
+  let initHtml = `<tr data-id="${data.id}">
     <td>
     ${data.id}
     </td>
@@ -45,7 +62,7 @@ function createTable(data) {
     ${data.family}
     </td>
     <td>
-    ${ new Date(data.birthday ).toDateString()}
+    ${new Date(data.birthday).toDateString()}
     </td>
     <td>
     ${data.nationalId}
@@ -60,7 +77,7 @@ function createTable(data) {
     ${data.education}
     </td>
     <td>
-    ${data.maritalStatus ? "married" :'single'} 
+    ${data.maritalStatus ? "married" : "single"} 
     </td>
     <td>
     ${data.country}
@@ -88,45 +105,77 @@ function createTable(data) {
     </td>
     <td id="edit" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
     </td>
-    <td id="delete" onclick="confirmDeleteData(${data.id})"><img src="https://img.icons8.com/cute-clipart/64/228BE6/filled-trash.png" width=40 height =40/></td>
-    </tr>`
-    usersTable.innerHTML += initHtml;
+    <td  onclick="confirmDeleteData(${data.id})"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    Delete
+  </button></td>
+     </tr>`;
+  usersTable.innerHTML += initHtml;
 }
-
+//   <td id="delete"><img src="https://img.icons8.com/cute-clipart/64/228BE6/filled-trash.png" width=40 height =40/></td>
 //page//
-function createPagination(count){
-    
- const pageCount = Math.ceil(count/limit);
-let lis ='';
-for(let i=1; i<=pageCount ;i++ ){
-    lis += `<li class= 'page-item ${i=== currentPage ? 'active' :'' }'> 
-    <a  href="#" class="page-link" >${i}</a> </li>` ;
-    
+function createPagination(count) {
+  const pageCount = Math.ceil(count / limit);
+  let lis = "";
+  for (let i = 1; i <= pageCount; i++) {
+    lis += `<li class= 'page-item ${i === currentPage ? "active" : ""}'> 
+    <a  href="#" class="page-link" >${i}</a> </li>`;
+  }
+
+  ulPagination.innerHTML = lis;
 }
-
-ulPagination.innerHTML =lis;
-
-}
-
 
 //addEventListener
-ulPagination.addEventListener("click",(event)=>{
-    const listItem = document.querySelectorAll(".page-item");
-    listItem.forEach((items)=>{
-        items.classList.remove("active");
-    });
-    event.target.parentElement.classList.add("active");
-    currentPage = Number(event.target.innerText);
-    getUser();
-} 
-);
+ulPagination.addEventListener("click", (event) => {
+  const listItem = document.querySelectorAll(".page-item");
+  listItem.forEach((items) => {
+    items.classList.remove("active");
+  });
+  event.target.parentElement.classList.add("active");
+  currentPage = Number(event.target.innerText);
+  getUser();
+});
 
-//delete 
+//delete
 // deleteIcon.forEach((item)=>{
-    // item.addEventListener("click",(event)=>{
-        // //console.log(event.target.innerText);
-    // });
+// item.addEventListener("click",(event)=>{
+// //console.log(event.target.innerText);
+// });
 // })
-// function confirmDeleteData(id){
-    // fetch
+function confirmDeleteData(id){
+    fetch(`${API_URL}/cw14/${id}`)
+    .then((response) => response.json())
+
+    .then((data) => {
+     name.innerText = data.name;
+     name.dataset.value = data.id;
+     family.innerText = data.family;
+     birthday.innerText = data.birthday;
+     nationalId.innerText= data.nationalId;
+     fathersName.innerText= data.fathersName;
+     job.innerText = data.job;
+     education.innerText = data.education;
+     country.innerText= data.country;
+     state.innerText = data.state;
+     city.innerText = data.city;
+     street.innerText= data.street;
+     block.innerText = data.block;
+     no.innerText = data.no;
+     floor.innerText = data.floor;
+     unit.innerText = data.unit;
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    
+}
+// function handleUser(){
+//     let idUser = name.dataset.value;
+//     console.log(idUser);
+//     // fetch(`${API_URL}/cw14/${id}`,{
+//     //     method:"DELETE",
+//     // })
+//     // .then((response) => response.json())
+
+//     // .then((data) => {})  
+
 // }
