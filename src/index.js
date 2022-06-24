@@ -28,12 +28,17 @@ const block = document.getElementById("block");
 const no = document.getElementById("no");
 const floor = document.getElementById("floor");
 const unit = document.getElementById("unit");
-
 const addButton = document.querySelector('#addButton');
+const refresh = document.getElementById("refresh");
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  getUser(currentPage);
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  params = Object.fromEntries(urlSearchParams.entries());
+  if (params.page) {
+    currentPage = Number(params.page);
+  }
+  getUser();
 });
 
 function getUser() {
@@ -52,63 +57,29 @@ function getUser() {
 
 function createTable(data) {
   let initHtml = `<tr data-id="${data.id}">
-    <td>
-    ${data.id}
-    </td>
-    <td>
-    ${data.name}
-    </td>
-    <td>
-    ${data.family}
-    </td>
-    <td>
-    ${new Date(data.birthday).toDateString()}
-    </td>
-    <td>
-    ${data.nationalId}
-    </td>
-    <td>
-    ${data.fathersName}
-    </td>
-    <td>
-    ${data.job}
-    </td>
-    <td>
-    ${data.education}
-    </td>
-    <td>
-    ${data.maritalStatus ? "married" : "single"} 
-    </td>
-    <td>
-    ${data.country}
-    </td>
-    <td>
-    ${data.state}
-    </td>
-    <td>
-    ${data.city}
-    </td>
-    <td>
-    ${data.street}
-    </td>
-    <td>
-    ${data.block}
-    </td>
-    <td>
-    ${data.no}
-    </td>
-    <td>
-    ${data.floor}
-    </td>
-    <td>
-    ${data.unit}
-    </td>
+    <td>${data.id}</td>
+    <td>${data.name}</td>
+    <td>${data.family}</td>
+    <td>${new Date(data.birthday).toDateString()}</td>
+    <td>${data.nationalId}</td>
+    <td>${data.fathersName}</td>
+    <td>${data.job}</td>
+    <td>${data.education}</td>
+    <td>${data.maritalStatus ? "married" : "single"} </td>
+    <td>${data.country}</td>
+    <td>${data.state}</td>
+    <td>${data.city}</td>
+    <td>${data.street}</td>
+    <td>${data.block}</td>
+    <td>${data.no}</td>
+    <td>${data.floor}</td>
+    <td>${data.unit}</td>
     <td id="edit" onClick="editUser(${data.id})" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
     </td>
     <td  onclick="confirmDeleteData(${data.id})"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
     Delete
   </button></td>
-     </tr>`;
+      </tr>`;
   usersTable.innerHTML += initHtml;
 }
 //   <td id="delete"><img src="https://img.icons8.com/cute-clipart/64/228BE6/filled-trash.png" width=40 height =40/></td>
@@ -189,3 +160,7 @@ addButton.addEventListener('click', () => {
 function editUser(id) {
   window.location.href = `./form/form.html?id=${id}&page=${currentPage}`;
 }
+
+refresh.addEventListener('click', () => {
+  getUser();
+})

@@ -18,7 +18,7 @@ const unit = document.getElementById("unit");
 const married = document.getElementById("married");
 const single = document.getElementById("single");
 let params = null;
-const spinner=document.getElementById('spinner');
+const spinner = document.getElementById('spinner');
 const submitButton = document.getElementById("submitButton");
 const btnPageHome = document.getElementById("btnPageHome");
 const formElement = document.querySelector("#form-data");
@@ -65,23 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     handleSubmit("PUT");
   } else {
-    
+
     handleSubmit("POST");
   }
 });
 function handleSubmit(methodAction) {
 
- 
-    formElement.addEventListener("submit", (event) => {
+
+  formElement.addEventListener("submit", (event) => {
     event.preventDefault();
-    submitButton.disabled=true;
-    beforeBtn.style.display='none';
+    submitButton.disabled = true;
+    beforeBtn.style.display = 'none';
     afterBtn.style.display = "block";
     const formData = new FormData(formElement);
     const data = Object.fromEntries(formData);
-    const url = methodAction === "PUT" ?  `${API_URL}/users/${params.id}` : `${API_URL}/users`
-  
-   
+    const url = methodAction === "PUT" ? `${API_URL}/users/${params.id}` : `${API_URL}/users`
+
+
     fetch(url, {
       method: methodAction,
       headers: {
@@ -92,16 +92,19 @@ function handleSubmit(methodAction) {
     })
       .then((res) => res.json())
       .then(
-        (data) => 
-        
-        window.location.href = `../index.html?page=${params.page}`
-      );
+        (data) => {
+          handleToast("success", `user ${data?.name} ${data?.family} successfully ${methodAction === "PUT" ? "update": "created"} ` )
+          if (params.page) window.location.href = `../index.html?page=${params.page}`;
+          else window.location.href = `../index.html`;
+        })
+        .catch((error) => console.log(error))
   });
 }
-btnPageHome.addEventListener("click", ()=>{
+btnPageHome.addEventListener("click", () => {
   if (params.page) window.location.href = `../index.html?page=${params.page}`;
   else window.location.href = `../index.html`;
 })
-  
+
+
 
 
