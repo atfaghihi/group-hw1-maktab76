@@ -1,0 +1,16 @@
+label {
+    width: 130px;
+    padding: 5px;
+    margin: 8px 0;
+}
+
+input {
+    width: 200px;
+    margin: 8px 0;
+}
+
+select {
+    width: 200px;
+    margin: 8px 0;
+    background-color: rgb(218, 212, 212);
+}

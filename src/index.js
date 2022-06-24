@@ -29,7 +29,7 @@ const no = document.getElementById("no");
 const floor = document.getElementById("floor");
 const unit = document.getElementById("unit");
 
-
+const addButton = document.querySelector('#addButton');
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -103,7 +103,7 @@ function createTable(data) {
     <td>
     ${data.unit}
     </td>
-    <td id="edit" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
+    <td id="edit" onClick="editUser(${data.id})" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
     </td>
     <td  onclick="confirmDeleteData(${data.id})"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
     Delete
@@ -141,41 +141,51 @@ ulPagination.addEventListener("click", (event) => {
 // //console.log(event.target.innerText);
 // });
 // })
-function confirmDeleteData(id){
-    fetch(`${API_URL}/cw14/${id}`)
+function confirmDeleteData(id) {
+  fetch(`${API_URL}/cw14/${id}`)
     .then((response) => response.json())
 
     .then((data) => {
-     name.innerText = data.name;
-     name.dataset.value = data.id;
-     family.innerText = data.family;
-     birthday.innerText = data.birthday;
-     nationalId.innerText= data.nationalId;
-     fathersName.innerText= data.fathersName;
-     job.innerText = data.job;
-     education.innerText = data.education;
-     country.innerText= data.country;
-     state.innerText = data.state;
-     city.innerText = data.city;
-     street.innerText= data.street;
-     block.innerText = data.block;
-     no.innerText = data.no;
-     floor.innerText = data.floor;
-     unit.innerText = data.unit;
+      name.innerText = data.name;
+      name.dataset.value = data.id;
+      family.innerText = data.family;
+      birthday.innerText = new Date(data.birthday).toDateString();
+      nationalId.innerText = data.nationalId;
+      fathersName.innerText = data.fathersName;
+      job.innerText = data.job;
+      education.innerText = data.education;
+      country.innerText = data.country;
+      state.innerText = data.state;
+      city.innerText = data.city;
+      street.innerText = data.street;
+      block.innerText = data.block;
+      no.innerText = data.no;
+      floor.innerText = data.floor;
+      unit.innerText = data.unit;
+      maritalStatus.innerText = data.maritalStatus ? "married" : "single";
     })
     .catch(error => {
-        console.log(error);
+      console.log(error);
     })
-    
+
 }
-// function handleUser(){
-//     let idUser = name.dataset.value;
-//     console.log(idUser);
-//     // fetch(`${API_URL}/cw14/${id}`,{
-//     //     method:"DELETE",
-//     // })
-//     // .then((response) => response.json())
+function handleUser() {
+  let idUser = name.dataset.value;
+  console.log(idUser);
+  fetch(`${API_URL}/cw14/${idUser}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
 
-//     // .then((data) => {})  
+    .then((data) => { getUser() });
 
-// }
+}
+
+
+addButton.addEventListener('click', () => {
+  window.location.href = './form/form.html';
+})
+
+function editUser(id) {
+  window.location.href = `./form/form.html?id=${id}&page=${currentPage}`;
+}

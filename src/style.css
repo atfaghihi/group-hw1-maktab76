@@ -1,16 +1,22 @@
-label {
-    width: 130px;
-    padding: 5px;
-    margin: 8px 0;
+.modal-dialog{
+    max-width:640px;
 }
-
-input {
+.col{
+    /* margin-left: 62px; */
     width: 200px;
-    margin: 8px 0;
 }
-
-select {
+.row label{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.modal-footer{
+    display: flex;
+    justify-content: space-evenly;
+    padding-right: 32px;
+}
+.modal-footer button{
     width: 200px;
-    margin: 8px 0;
-    background-color: rgb(218, 212, 212);
+    height: 44px;
+    font-weight:bold;
+    margin-bottom: 10px;
 }
