@@ -1,6 +1,6 @@
 /// VARIABLE PUBLIC
 
-const API_URL = "https://62b3028e20cad3685c9927bf.mockapi.io/api";
+const API_URL = "https://62b585bada3017eabb1c867a.mockapi.io/api";
 
 const limit = 10;
 let currentPage = 1;
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function getUser() {
   usersTable.innerHTML = "";
   pageLoading.style.display = "block";
-  fetch(`${API_URL}/cw14/?page=${currentPage}&limit=${limit}`)
+  fetch(`${API_URL}/users/?page=${currentPage}&limit=${limit}`)
     .then((response) => response.json())
 
     .then((data) => {
@@ -142,7 +142,7 @@ ulPagination.addEventListener("click", (event) => {
 // });
 // })
 function confirmDeleteData(id) {
-  fetch(`${API_URL}/cw14/${id}`)
+  fetch(`${API_URL}/users/${id}`)
     .then((response) => response.json())
 
     .then((data) => {
@@ -172,7 +172,7 @@ function confirmDeleteData(id) {
 function handleUser() {
   let idUser = name.dataset.value;
   console.log(idUser);
-  fetch(`${API_URL}/cw14/${idUser}`, {
+  fetch(`${API_URL}/users/${idUser}`, {
     method: "DELETE",
   })
     .then((response) => response.json())

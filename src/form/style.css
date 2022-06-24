@@ -14,3 +14,7 @@ select {
     margin: 8px 0;
     background-color: rgb(218, 212, 212);
 }
+.afterBtn{
+    display: none;
+    
+}

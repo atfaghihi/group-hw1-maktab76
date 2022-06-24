@@ -25,7 +25,7 @@
       >
         <button
           type="button"
-          onclick="handlePageHome()"
+          id="btnPageHome"
           class="btn btn-success px-5 py-3 text-dark mb-4 fw-bold"
         >
           See all information
@@ -42,71 +42,71 @@
         >
           <div class="div col-6">
             <div class="d-flex fw-bold">
-              <label for="">Name:</label>
-              <input type="text" id="name" required />
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Birthday:</label>
-              <input type="text" id="birthday" required />
+              <label for="birthday">Birthday:</label>
+              <input type="text" id="birthday" name="birthday" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Fathers Name:</label>
-              <input type="text" id="fathersName" required />
+              <label for="fathersName">Fathers Name:</label>
+              <input type="text" id="fathersName" name="fathersName" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Education:</label>
-              <input type="text" id="education" required />
+              <label for="education">Education:</label>
+              <input type="text" id="education" name="education" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Country:</label>
-              <input type="text" id="country" required />
+              <label for="country">Country:</label>
+              <input type="text" id="country" name="country" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">City:</label>
-              <input type="text" id="city" required />
+              <label for="city">City:</label>
+              <input type="text" id="city" name="city" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Block:</label>
-              <input type="text" id="block" required />
+              <label for="blcok">Block:</label>
+              <input type="number" id="block" name="block" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Floor:</label>
-              <input type="text" id="floor" required />
+              <label for="floor">Floor:</label>
+              <input type="text" id="floor" name="floor" required />
             </div>
           </div>
           <div class="div col-6">
             <div class="d-flex fw-bold">
-              <label for="">Family:</label>
-              <input type="text" id="family" required />
+              <label for="family">Family:</label>
+              <input type="text" id="family" name="family" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">National Id:</label>
-              <input type="text" id="nationalId" required />
+              <label for="nationalId">National Id:</label>
+              <input type="text" id="nationalId" name="nationalId" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Job:</label>
-              <input type="text" id="job" required />
+              <label for="job">Job:</label>
+              <input type="text" id="job" name="job" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Marital Status:</label>
-              <input type="radio" name="Status" id="single" />single
-              <input type="radio" name="Status" id="married" />married
+              <label for="status">Marital Status:</label>
+              <input type="radio" name="Status" id="single" value=false/>single
+              <input type="radio" name="Status" id="married" value=true />married
             </div>
             <div class="d-flex fw-bold">
-              <label for="">State:</label>
-              <input type="text" id="state" required />
+              <label for="state">State:</label>
+              <input type="text" id="state" name="state" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Street:</label>
-              <input type="text" id="street" required />
+              <label for="street">Street:</label>
+              <input type="text" id="street" name="street" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">No:</label>
-              <input type="text" id="no" required />
+              <label for="no">No:</label>
+              <input type="text" id="no" name="no" required />
             </div>
             <div class="d-flex fw-bold">
-              <label for="">Unit:</label>
-              <input type="text" id="unit" required />
+              <label for="unit">Unit:</label>
+              <input type="text" id="unit" name="unit" required />
             </div>
           </div>
           <div class="d-flex justify-content-center mt-3">
@@ -116,11 +116,13 @@
               class="btn btn-primary px-4 py-2 text-dark fw-bold"
               type="button"
             >
-              <div class="d-none" id="spinner"> 
+              <div class="beforeBtn" id="beforeId"> 
+                Add this information
+              </div>
+              <div class="afterBtn" id="afterId"> 
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span> 
                 Processing...
               </div>
-
             </button>
           </div>
         </form>
