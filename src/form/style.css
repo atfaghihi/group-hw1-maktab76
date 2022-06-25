@@ -25,7 +25,7 @@ select {
 .radio {
   width:40px
 }
-#status{
+.status{
    display: flex;
    align-items: center;
 }
