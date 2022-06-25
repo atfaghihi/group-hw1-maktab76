@@ -1,22 +1,21 @@
-.modal-dialog{
-    max-width:640px;
+.modal-dialog {
+  max-width: 640px;
 }
-.col{
-    /* margin-left: 62px; */
-    width: 200px;
+.col {
+  width: 200px;
 }
-.row label{
-    font-weight: bold;
-    margin-bottom: 10px;
+.row label {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
-.modal-footer{
-    display: flex;
-    justify-content: space-evenly;
-    padding-right: 32px;
+.modal-footer {
+  display: flex;
+  justify-content: space-evenly;
+  padding-right: 32px;
 }
-.modal-footer button{
-    width: 200px;
-    height: 44px;
-    font-weight:bold;
-    margin-bottom: 10px;
+.modal-footer button {
+  width: 200px;
+  height: 44px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }

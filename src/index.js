@@ -1,37 +1,24 @@
-/// VARIABLE PUBLIC
-
-const API_URL = "https://62b585bada3017eabb1c867a.mockapi.io/api";
-
+// pagination variables
 const limit = 10;
 let currentPage = 1;
-
 const usersTable = document.getElementById("tbody");
 const ulPagination = document.querySelector("#paginationUsers");
+
+// button variables
 const pageLoading = document.querySelector("#loading");
 const editIcon = document.querySelectorAll("#edit");
 const deleteIcon = document.querySelectorAll("#delete");
-// modal variables
 
-const name = document.getElementById("name");
-const family = document.getElementById("family");
-const birthday = document.getElementById("birthday");
-const nationalId = document.getElementById("nationalId");
-const fathersName = document.getElementById("fathersName");
-const job = document.getElementById("job");
-const education = document.getElementById("education");
-const maritalStatus = document.getElementById("maritalStatus");
-const country = document.getElementById("country");
-const state = document.getElementById("state");
-const city = document.getElementById("city");
-const street = document.getElementById("street");
-const block = document.getElementById("block");
-const no = document.getElementById("no");
-const floor = document.getElementById("floor");
-const unit = document.getElementById("unit");
-const addButton = document.querySelector('#addButton');
+// modal variables
+const addButton = document.querySelector("#addButton");
 const refresh = document.getElementById("refresh");
 
+// search variables
+const searchInput = document.getElementById("search");
+const debounceSearchUser = _.debounce(searchUsers, 500);
+const searchWrapper = document.getElementById("searchWrapper");
 
+// handle DOM
 document.addEventListener("DOMContentLoaded", () => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   params = Object.fromEntries(urlSearchParams.entries());
@@ -41,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getUser();
 });
 
+//handle listUSer
 function getUser() {
   usersTable.innerHTML = "";
   pageLoading.style.display = "block";
@@ -54,9 +42,9 @@ function getUser() {
       pageLoading.style.display = "none";
     });
 }
-
 function createTable(data) {
-  let initHtml = `<tr data-id="${data.id}">
+  let initHtml = 
+    `<tr data-id="${data.id}">
     <td>${data.id}</td>
     <td>${data.name}</td>
     <td>${data.family}</td>
@@ -74,16 +62,20 @@ function createTable(data) {
     <td>${data.no}</td>
     <td>${data.floor}</td>
     <td>${data.unit}</td>
-    <td id="edit" onClick="editUser(${data.id})" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
+    <td id="edit" onClick="editUser(${
+      data.id
+    })" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
     </td>
-    <td  onclick="confirmDeleteData(${data.id})"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    <td  onclick="confirmDeleteData(${
+      data.id
+    })"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
     Delete
   </button></td>
       </tr>`;
   usersTable.innerHTML += initHtml;
 }
-//   <td id="delete"><img src="https://img.icons8.com/cute-clipart/64/228BE6/filled-trash.png" width=40 height =40/></td>
-//page//
+
+// handle page
 function createPagination(count) {
   const pageCount = Math.ceil(count / limit);
   let lis = "";
@@ -95,7 +87,7 @@ function createPagination(count) {
   ulPagination.innerHTML = lis;
 }
 
-//addEventListener
+// block delete
 ulPagination.addEventListener("click", (event) => {
   const listItem = document.querySelectorAll(".page-item");
   listItem.forEach((items) => {
@@ -106,12 +98,6 @@ ulPagination.addEventListener("click", (event) => {
   getUser();
 });
 
-//delete
-// deleteIcon.forEach((item)=>{
-// item.addEventListener("click",(event)=>{
-// //console.log(event.target.innerText);
-// });
-// })
 function confirmDeleteData(id) {
   fetch(`${API_URL}/users/${id}`)
     .then((response) => response.json())
@@ -135,10 +121,9 @@ function confirmDeleteData(id) {
       unit.innerText = data.unit;
       maritalStatus.innerText = data.maritalStatus ? "married" : "single";
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
-    })
-
+    });
 }
 function handleUser() {
   let idUser = name.dataset.value;
@@ -148,19 +133,50 @@ function handleUser() {
   })
     .then((response) => response.json())
 
-    .then((data) => { getUser() });
-
+    .then((data) => {
+      getUser();
+    });
 }
 
-
-addButton.addEventListener('click', () => {
-  window.location.href = './form/form.html';
-})
+addButton.addEventListener("click", () => {
+  window.location.href = "./form/form.html";
+});
 
 function editUser(id) {
   window.location.href = `./form/form.html?id=${id}&page=${currentPage}`;
 }
 
-refresh.addEventListener('click', () => {
+refresh.addEventListener("click", () => {
   getUser();
-})
+});
+
+// block search
+function searchUsers(user) {
+  console.log(user);
+  fetch(`${API_URL}/users?search=${user}`, {})
+    .then((response) => response.json())
+    .then((data) => {
+      const { items } = data;
+      items.forEach(creatSearchViews);
+    });
+}
+function creatSearchViews(users) {
+  let html = `
+   <p class="d-flex justify-content-around bg-info rounded-1 text-white py-1">
+      <span>${users.id}</span>
+      <span>${users.name}</span>
+      <span>${users.family}</span>
+      <span>${users.country}</span>
+      <span>${users.city}</span>
+   </p>`;
+  searchWrapper.innerHTML = html;
+}
+searchInput.addEventListener("input", (event) => {
+  console.log(event.target.value);
+  debounceSearchUser(event.target.value);
+  searchWrapper.style.display = "block";
+});
+searchInput.addEventListener("blur", () => {
+  searchWrapper.innerHTML = "";
+  searchWrapper.style.display = "none";
+});
