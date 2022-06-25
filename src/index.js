@@ -43,7 +43,7 @@ function getUser() {
     });
 }
 function createTable(data) {
-  let initHtml = 
+  let initHtml =
     `<tr data-id="${data.id}">
     <td>${data.id}</td>
     <td>${data.name}</td>
@@ -62,12 +62,10 @@ function createTable(data) {
     <td>${data.no}</td>
     <td>${data.floor}</td>
     <td>${data.unit}</td>
-    <td id="edit" onClick="editUser(${
-      data.id
-    })" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=40 height =40/>
+    <td id="edit" onClick="editUser(${data.id
+    })" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=34 height =34/>
     </td>
-    <td  onclick="confirmDeleteData(${
-      data.id
+    <td  onclick="confirmDeleteData(${data.id
     })"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
     Delete
   </button></td>
