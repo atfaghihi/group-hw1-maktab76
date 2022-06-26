@@ -84,12 +84,12 @@ function handleSubmit(methodAction) {
             methodAction === "PUT" ? "update" : "created"
           } `
         );
-        // setTimeout(() => {
-          
-        // }, 3000);
-        if (params.page)
+        setTimeout(() => {
+          if (params.page)
           window.location.href = `../index.html?page=${params.page}`;
           else window.location.href = `../index.html`;
+        }, 2000);
+       
       })
       .catch((error) =>
        console.log(error)
