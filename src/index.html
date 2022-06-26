@@ -26,6 +26,9 @@
     <div
       class="wrapper d-flex flex-column justify-content-center align-items-center"
     >
+
+    <!-- header -->
+
       <h1 class="pt-5">This table is a secret informations!</h1>
       <p>you can copy information here, 😊😊😊 we are powerful..</p>
       <div class="div d-flex m-5">
@@ -66,6 +69,9 @@
       <div
         class="container-fluid position-relative d-flex align-items-center pb-3"
       >
+
+      <!-- dataInformationTable -->
+
         <table class="table table-bordered no-wrap">
           <thead>
             <tr>
@@ -93,6 +99,9 @@
           <tbody id="tbody"></tbody>
         </table>
       </div>
+
+      <!-- loadingPage -->
+
       <img
         id="loading"
         src="./asset/images/loading.svg"
@@ -104,6 +113,9 @@
           display: none;
         "
       />
+
+      <!-- pagination -->
+
       <nav
         aria-label="Page navigation example"
         class="position-absolute bottom-0 start-50 translate-middle-x"
@@ -111,7 +123,9 @@
       >
         <ul id="paginationUsers" class="pagination"></ul>
       </nav>
+
       <!-- modal -->
+
       <div class="modal fade" id="deleteModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -220,6 +234,7 @@
         </div>
       </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script
       type="text/javascript"

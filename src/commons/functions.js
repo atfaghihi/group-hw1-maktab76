@@ -9,5 +9,8 @@ function handleToast(type, massage) {
     },
     gravity: "top", // `top` or `bottom`
     position: "right", // `left`, `center` or `right`
+    onClick: function() {
+      
+    }
   }).showToast();
 }

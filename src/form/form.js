@@ -84,11 +84,16 @@ function handleSubmit(methodAction) {
             methodAction === "PUT" ? "update" : "created"
           } `
         );
+        // setTimeout(() => {
+          
+        // }, 3000);
         if (params.page)
           window.location.href = `../index.html?page=${params.page}`;
-        else window.location.href = `../index.html`;
+          else window.location.href = `../index.html`;
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+       console.log(error)
+       );
   });
 }
 

@@ -65,10 +65,10 @@ function createTable(data) {
     <td id="edit" onClick="editUser(${data.id
     })" ><img src="https://img.icons8.com/cute-clipart/64/228BE6/edit.png" width=34 height =34/>
     </td>
-    <td  onclick="confirmDeleteData(${data.id
-    })"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
-    Delete
-  </button></td>
+    <td id="deleteData" onclick="confirmDeleteData(${data.id})">
+    <img data-bs-toggle="modal" data-bs-target="#deleteModal"
+     src="https://img.icons8.com/cute-clipart/64/000000/filled-trash.png" width=38 height =38/>
+    </td>
       </tr>`;
   usersTable.innerHTML += initHtml;
 }
@@ -77,22 +77,33 @@ function createTable(data) {
 function createPagination(count) {
   const pageCount = Math.ceil(count / limit);
   let lis = "";
+
+  lis += `<li class= 'page-item'> 
+<a  href="#" class="page-link" >previous</a> </li>`;
+
   for (let i = 1; i <= pageCount; i++) {
     lis += `<li class= 'page-item ${i === currentPage ? "active" : ""}'> 
     <a  href="#" class="page-link" >${i}</a> </li>`;
   }
 
+  lis += `<li class= 'page-item'> 
+<a  href="#" class="page-link" >next</a> </li>`;
   ulPagination.innerHTML = lis;
 }
+
 
 // block delete
 ulPagination.addEventListener("click", (event) => {
   const listItem = document.querySelectorAll(".page-item");
+  if (event.target.innerHTML === "previous") currentPage--;
+  else if (event.target.innerHTML === "next") currentPage++;
+  else {
+    currentPage = Number(event.target.innerText);
+  }
   listItem.forEach((items) => {
     items.classList.remove("active");
   });
   event.target.parentElement.classList.add("active");
-  currentPage = Number(event.target.innerText);
   getUser();
 });
 
@@ -131,7 +142,17 @@ function handleUser() {
   })
     .then((response) => response.json())
 
-    .then((data) => {
+    .then(() => {
+      Toastify({
+
+        text: `user ${idUser} deleted`,
+        style: {
+          background: 'red'
+        },
+        duration: 5000
+
+      }).showToast();
+
       getUser();
     });
 }
@@ -151,28 +172,17 @@ refresh.addEventListener("click", () => {
 // block search
 function searchUsers(user) {
   console.log(user);
-  fetch(`${API_URL}/users?search=${user}`, {})
+  fetch(`${API_URL}/users?search=${user}`)
     .then((response) => response.json())
     .then((data) => {
       const { items } = data;
-      items.forEach(creatSearchViews);
+      usersTable.innerHTML = "";
+      items.forEach(createTable);
     });
 }
-function creatSearchViews(users) {
-  let html = `
-   <p class="d-flex justify-content-around bg-info rounded-1 text-white py-1">
-      <span>${users.id}</span>
-      <span>${users.name}</span>
-      <span>${users.family}</span>
-      <span>${users.country}</span>
-      <span>${users.city}</span>
-   </p>`;
-  searchWrapper.innerHTML = html;
-}
+
 searchInput.addEventListener("input", (event) => {
-  console.log(event.target.value);
   debounceSearchUser(event.target.value);
-  searchWrapper.style.display = "block";
 });
 searchInput.addEventListener("blur", () => {
   searchWrapper.innerHTML = "";

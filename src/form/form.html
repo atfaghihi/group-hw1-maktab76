@@ -40,6 +40,10 @@
           You can not paste information here! 😊😊😊 do not be lazy, just type..
         </p>
       </div>
+
+
+      <!-- formData -->
+
       <div class="d-flex justify-content-center align-items-center">
         <form
           id="form-data"
@@ -82,7 +86,7 @@
               </div>
               <div class="d-flex fw-bold">
                 <label for="floor">Floor:</label>
-                <input type="text" id="floor" name="floor" required />
+                <input type="number" id="floor" name="floor" required />
               </div>
             </div>
             <div class="column col-6">
@@ -92,7 +96,7 @@
               </div>
               <div class="d-flex fw-bold">
                 <label for="nationalId">National Id:</label>
-                <input type="text" id="nationalId" name="nationalId" required />
+                <input type="number" id="nationalId" name="nationalId" required />
               </div>
               <div class="d-flex fw-bold">
                 <label for="job">Job:</label>
@@ -105,14 +109,14 @@
                   type="radio"
                   name="Status"
                   id="single"
-                  value="false"
+                  value= ''
                 />single
                 <input
                   class="radio"
                   type="radio"
                   name="Status"
                   id="married"
-                  value="true"
+                  value= "true"
                 />married
               </div>
               <div class="d-flex fw-bold">
@@ -125,11 +129,11 @@
               </div>
               <div class="d-flex fw-bold">
                 <label for="no">No:</label>
-                <input type="text" id="no" name="no" required />
+                <input type="number" id="no" name="no" required />
               </div>
               <div class="d-flex fw-bold">
                 <label for="unit">Unit:</label>
-                <input type="text" id="unit" name="unit" required />
+                <input type="number" id="unit" name="unit" required />
               </div>
             </div>
             <div class="d-flex justify-content-center mt-5">
@@ -154,7 +158,7 @@
         </form>
       </div>
     </div>
-    <!-- model -->
+    
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"

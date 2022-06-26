@@ -37,3 +37,8 @@ table{
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+#edit , #deleteData {
+  cursor: pointer;
+}
+
